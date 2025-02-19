@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SbootCmsApiGatewayApplication {
+public class SbootApiGatewayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SbootCmsApiGatewayApplication.class, args);
+		SpringApplication.run(SbootApiGatewayApplication.class, args);
 	}
 
 }
