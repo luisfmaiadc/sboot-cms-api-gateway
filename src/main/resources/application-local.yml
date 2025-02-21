@@ -1,0 +1,35 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: sboot-gateway-cms
+
+  cloud:
+    gateway:
+      routes:
+        - id: teacher-service
+          uri: lb://sboot-cms-teacher-ms
+          predicates:
+            - Path=/professor/**
+          filters:
+            - RewritePath=/professor/(?<segment>.*), /professor/$\{segment}
+
+        - id: student-service
+          uri: lb://sboot-cms-student-ms
+          predicates:
+            - Path=/aluno/**
+          filters:
+            - RewritePath=/aluno/(?<segment>.*), /aluno/$\{segment}
+
+        - id: course-service
+          uri: lb://sboot-cms-course-ms
+          predicates:
+            - Path=/curso/**
+          filters:
+            - RewritePath=/curso/(?<segment>.*), /curso/$\{segment}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8082/eureka
