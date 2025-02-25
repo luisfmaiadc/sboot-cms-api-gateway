@@ -5,6 +5,11 @@ spring:
   application:
     name: sboot-gateway-cms
 
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/dbUser
+    username: postgres
+    password: 23100610
+
   cloud:
     gateway:
       routes:
