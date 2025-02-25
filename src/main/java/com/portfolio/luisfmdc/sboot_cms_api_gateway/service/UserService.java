@@ -3,6 +3,7 @@ package com.portfolio.luisfmdc.sboot_cms_api_gateway.service;
 import com.portfolio.luisfmdc.sboot_cms_api_gateway.domain.RegisterUserRequest;
 import com.portfolio.luisfmdc.sboot_cms_api_gateway.domain.Role;
 import com.portfolio.luisfmdc.sboot_cms_api_gateway.domain.User;
+import com.portfolio.luisfmdc.sboot_cms_api_gateway.infra.exception.InvalidRequestArgumentsException;
 import com.portfolio.luisfmdc.sboot_cms_api_gateway.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,11 +21,11 @@ public class UserService {
 
     public Mono<Void> registerUser(RegisterUserRequest request) {
         if (request.getRole() == Role.ADMIN) {
-            return Mono.error(new IllegalArgumentException("Cadastro de ADMIN não permitido!"));
+            return Mono.error(new InvalidRequestArgumentsException("Cadastro como ADMIN não permitido."));
         }
 
         return repository.findByEmail(request.getEmail())
-                .flatMap(existingUser -> Mono.error(new IllegalArgumentException("Email já cadastrado!")))
+                .flatMap(existingUser -> Mono.error(new InvalidRequestArgumentsException("Email já cadastrado.")))
                 .switchIfEmpty(Mono.defer(() -> {
                     String encryptedPassword = passwordEncoder.encode(request.getPassword());
                     User user = User.builder()
