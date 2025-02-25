@@ -22,8 +22,8 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(auth -> auth
                         .pathMatchers("/auth/**").permitAll()
-                        .pathMatchers("/professor/**").hasAuthority("ROLE_TEACHER")
-                        .pathMatchers("/aluno/**").hasAuthority("ROLE_STUDENT")
+                        .pathMatchers("/professor/**").hasAnyAuthority("ROLE_TEACHER", "ROLE_ADMIN")
+                        .pathMatchers("/aluno/**").hasAnyAuthority("ROLE_STUDENT", "ROLE_ADMIN")
                         .pathMatchers("/curso/**").hasAuthority("ROLE_ADMIN")
                         .anyExchange().authenticated()
                 )
